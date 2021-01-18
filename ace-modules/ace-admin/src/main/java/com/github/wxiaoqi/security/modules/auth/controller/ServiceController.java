@@ -4,6 +4,7 @@ import com.github.wxiaoqi.security.common.rest.BaseController;
 import com.github.wxiaoqi.security.modules.auth.biz.ClientBiz;
 import com.github.wxiaoqi.security.modules.auth.entity.Client;
 
+import moe.kira.common.message.Responses;
 import moe.kira.common.message.impl.ObjectRestResponse;
 import moe.kira.common.message.impl.SimpleResponse;
 
@@ -23,7 +24,7 @@ public class ServiceController extends BaseController<ClientBiz,Client>{
     @ResponseBody
     public SimpleResponse modifyUsers(@PathVariable int id, String clients){
         baseBiz.modifyClientServices(id, clients);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/{id}/client", method = RequestMethod.GET)

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.wxiaoqi.security.common.constant.RedisKeyConstant;
 import com.github.wxiaoqi.security.modules.admin.entity.OnlineLog;
 
+import moe.kira.common.message.Responses;
 import moe.kira.common.message.impl.ObjectRestResponse;
 import moe.kira.common.message.impl.SimpleResponse;
 import moe.kira.common.message.impl.TableResultResponse;
@@ -52,7 +53,7 @@ public class OnlineController {
     public SimpleResponse forceLogout(@PathVariable("id") String tokenId) {
         stringRedisTemplate.delete(RedisKeyConstant.REDIS_KEY_TOKEN + ":" + tokenId);
         stringRedisTemplate.opsForZSet().remove(RedisKeyConstant.REDIS_KEY_TOKEN, tokenId);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
 }

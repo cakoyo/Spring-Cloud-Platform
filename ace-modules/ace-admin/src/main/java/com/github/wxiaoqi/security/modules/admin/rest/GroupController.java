@@ -10,6 +10,7 @@ import com.github.wxiaoqi.security.modules.admin.vo.GroupUsers;
 import com.github.wxiaoqi.security.common.rest.BaseController;
 import com.github.wxiaoqi.security.common.util.TreeUtil;
 import io.swagger.annotations.Api;
+import moe.kira.common.message.Responses;
 import moe.kira.common.message.impl.ObjectRestResponse;
 import moe.kira.common.message.impl.SimpleResponse;
 
@@ -62,7 +63,7 @@ public class GroupController extends BaseController<GroupBiz, Group> {
     @ResponseBody
     public SimpleResponse modifiyUsers(@PathVariable int id,String members,String leaders){
         baseBiz.modifyGroupUsers(id, members, leaders);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/{id}/user", method = RequestMethod.GET)
@@ -76,7 +77,7 @@ public class GroupController extends BaseController<GroupBiz, Group> {
     public SimpleResponse modifyMenuAuthority(@PathVariable  int id, String menuTrees){
         String [] menus = menuTrees.split(",");
         baseBiz.modifyAuthorityMenu(id, menus);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/{id}/authority/menu", method = RequestMethod.GET)
@@ -89,14 +90,14 @@ public class GroupController extends BaseController<GroupBiz, Group> {
     @ResponseBody
     public SimpleResponse addElementAuthority(@PathVariable  int id,int menuId, int elementId){
         baseBiz.modifyAuthorityElement(id,menuId,elementId);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/{id}/authority/element/remove", method = RequestMethod.PUT)
     @ResponseBody
     public SimpleResponse removeElementAuthority(@PathVariable int id,int menuId, int elementId){
         baseBiz.removeAuthorityElement(id,menuId,elementId);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/{id}/authority/element", method = RequestMethod.GET)

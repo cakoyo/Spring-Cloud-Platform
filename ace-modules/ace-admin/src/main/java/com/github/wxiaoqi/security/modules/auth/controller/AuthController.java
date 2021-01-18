@@ -4,6 +4,7 @@ import com.github.wxiaoqi.security.common.exception.auth.UserInvalidException;
 import com.github.wxiaoqi.security.modules.auth.service.AuthService;
 import com.github.wxiaoqi.security.modules.auth.util.user.JwtAuthenticationRequest;
 import lombok.extern.slf4j.Slf4j;
+import moe.kira.common.message.Responses;
 import moe.kira.common.message.impl.ObjectRestResponse;
 import moe.kira.common.message.impl.SimpleResponse;
 
@@ -65,13 +66,13 @@ public class AuthController {
     @RequestMapping(value = "verify", method = RequestMethod.GET)
     public SimpleResponse verify(String token) throws Exception {
         authService.validate(token);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "logout", method = RequestMethod.DELETE)
     public SimpleResponse logout(String token) throws Exception {
         authService.logout(token);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
 }

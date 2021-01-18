@@ -28,6 +28,7 @@ package com.github.wxiaoqi.search.controller;
 import com.github.wxiaoqi.search.service.LuceneService;
 import com.github.wxiaoqi.security.api.vo.search.IndexObject;
 
+import moe.kira.common.message.Responses;
 import moe.kira.common.message.impl.ObjectRestResponse;
 import moe.kira.common.message.impl.SimpleResponse;
 import moe.kira.common.message.impl.TableResultResponse;
@@ -55,13 +56,13 @@ public class SearchController {
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     public SimpleResponse createIndexObject(@RequestBody IndexObject indexObject) {
         luceneService.save(indexObject);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.DELETE)
     public SimpleResponse removeIndexObject(@RequestBody IndexObject indexObject) {
         luceneService.delete(indexObject);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.PATCH)
@@ -69,13 +70,13 @@ public class SearchController {
         for (IndexObject object : indexObjects) {
             luceneService.save(object);
         }
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.PUT)
     public SimpleResponse updateIndexObject(@RequestBody IndexObject indexObject) {
         luceneService.update(indexObject);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
 }

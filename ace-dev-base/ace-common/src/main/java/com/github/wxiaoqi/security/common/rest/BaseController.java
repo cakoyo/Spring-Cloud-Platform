@@ -4,6 +4,7 @@ import com.github.wxiaoqi.security.common.biz.BaseBiz;
 import com.github.wxiaoqi.security.common.context.BaseContextHandler;
 import com.github.wxiaoqi.security.common.util.Query;
 import lombok.extern.slf4j.Slf4j;
+import moe.kira.common.message.Responses;
 import moe.kira.common.message.impl.ObjectRestResponse;
 import moe.kira.common.message.impl.SimpleResponse;
 import moe.kira.common.message.impl.TableResultResponse;
@@ -32,7 +33,7 @@ public class BaseController<Biz extends BaseBiz,Entity> {
     @ResponseBody
     public SimpleResponse add(@RequestBody Entity entity){
         baseBiz.insertSelective(entity);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
@@ -46,13 +47,13 @@ public class BaseController<Biz extends BaseBiz,Entity> {
     @ResponseBody
     public SimpleResponse update(@RequestBody Entity entity){
         baseBiz.updateSelectiveById(entity);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     @ResponseBody
     public SimpleResponse remove(@PathVariable int id){
         baseBiz.deleteById(id);
-        return new SimpleResponse();
+        return Responses.normalize();
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.GET)
