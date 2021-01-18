@@ -1,6 +1,6 @@
 package com.github.wxiaoqi.security.modules.admin.biz;
 
-import com.github.wxiaoqi.security.common.biz.BaseBiz;
+import com.github.wxiaoqi.security.common.biz.MapperAgent;
 import com.github.wxiaoqi.security.modules.admin.entity.User;
 import com.github.wxiaoqi.security.modules.admin.mapper.UserMapper;
 import com.github.wxiaoqi.security.modules.admin.util.Sha256PasswordEncoder;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class UserBiz extends BaseBiz<UserMapper,User> {
+public class UserBiz extends MapperAgent<User, UserMapper> {
 
     private Sha256PasswordEncoder encoder = new Sha256PasswordEncoder();
 
@@ -24,11 +24,6 @@ public class UserBiz extends BaseBiz<UserMapper,User> {
         String password = encoder.encode(entity.getPassword());
         entity.setPassword(password);
         super.insertSelective(entity);
-    }
-
-    @Override
-    public void updateSelectiveById(User entity) {
-        super.updateSelectiveById(entity);
     }
 
     /**

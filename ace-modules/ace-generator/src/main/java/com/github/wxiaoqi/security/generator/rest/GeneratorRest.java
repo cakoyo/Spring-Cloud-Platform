@@ -66,7 +66,7 @@ public class GeneratorRest {
     @ResponseBody
     @RequestMapping("/dbs")
     public TableResultResponse<String> getDbList() {
-        return new TableResultResponse(new Long(source.size()), source.stream().map(DruidDataSource::getName).collect(Collectors.toList()));
+        return new TableResultResponse(source.size(), source.stream().map(DruidDataSource::getName).collect(Collectors.toList()));
     }
 
     /**

@@ -62,7 +62,7 @@ public class MenuController extends BaseController<MenuBiz, Menu> {
     public List<Menu> getSystem() {
         Menu menu = new Menu();
         menu.setParentId(AdminCommonConstant.ROOT);
-        return baseBiz.selectList(menu);
+        return baseBiz.select(menu);
     }
 
     @RequestMapping(value = "/menuTree", method = RequestMethod.GET)
@@ -88,7 +88,7 @@ public class MenuController extends BaseController<MenuBiz, Menu> {
     public List<AuthorityMenuTree> listAuthorityMenu() {
         List<AuthorityMenuTree> trees = new ArrayList<AuthorityMenuTree>();
         AuthorityMenuTree node = null;
-        for (Menu menu : baseBiz.selectListAll()) {
+        for (Menu menu : baseBiz.selectAll()) {
             node = new AuthorityMenuTree();
             node.setText(menu.getTitle());
             BeanUtils.copyProperties(menu, node);

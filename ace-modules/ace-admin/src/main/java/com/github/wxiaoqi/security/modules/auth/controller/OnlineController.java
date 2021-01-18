@@ -45,7 +45,7 @@ public class OnlineController {
                 logs.add(JSON.parseObject(s, OnlineLog.class));
             }
         }
-        return new TableResultResponse<>(stringRedisTemplate.opsForZSet().size(RedisKeyConstant.REDIS_KEY_TOKEN), logs);
+        return new TableResultResponse<OnlineLog>(stringRedisTemplate.opsForZSet().size(RedisKeyConstant.REDIS_KEY_TOKEN).intValue(), logs);
     }
 
 

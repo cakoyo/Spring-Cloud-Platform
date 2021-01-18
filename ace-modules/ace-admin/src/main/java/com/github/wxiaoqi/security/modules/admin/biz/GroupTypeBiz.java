@@ -4,7 +4,7 @@ import com.github.wxiaoqi.security.modules.admin.entity.GroupType;
 import org.springframework.stereotype.Service;
 
 import com.github.wxiaoqi.security.modules.admin.mapper.GroupTypeMapper;
-import com.github.wxiaoqi.security.common.biz.BaseBiz;
+import com.github.wxiaoqi.security.common.biz.MapperAgent;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -15,5 +15,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GroupTypeBiz extends BaseBiz<GroupTypeMapper,GroupType> {
+public class GroupTypeBiz extends MapperAgent<GroupType, GroupTypeMapper> {
 }

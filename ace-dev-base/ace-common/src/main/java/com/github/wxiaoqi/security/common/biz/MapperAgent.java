@@ -21,7 +21,7 @@ import java.util.Map;
  * Time: 15:13
  * Version 1.0.0
  */
-public abstract class BaseBiz<M extends Mapper<T>, T> {
+public class MapperAgent<T, M extends Mapper<T>> {
     @Autowired
     protected M mapper;
 
@@ -33,59 +33,48 @@ public abstract class BaseBiz<M extends Mapper<T>, T> {
         return mapper.selectOne(entity);
     }
 
-
     public T selectById(Object id) {
         return mapper.selectByPrimaryKey(id);
     }
 
-
-    public List<T> selectList(T entity) {
+    public List<T> select(T entity) {
         return mapper.select(entity);
     }
 
-
-    public List<T> selectListAll() {
+    public List<T> selectAll() {
         return mapper.selectAll();
     }
 
-
-    public Long selectCount(T entity) {
-        return new Long(mapper.selectCount(entity));
+    public int selectCount(T entity) {
+        return mapper.selectCount(entity);
     }
-
 
     public void insert(T entity) {
         EntityUtils.setCreatAndUpdatInfo(entity);
         mapper.insert(entity);
     }
 
-
     public void insertSelective(T entity) {
         EntityUtils.setCreatAndUpdatInfo(entity);
         mapper.insertSelective(entity);
     }
 
-
     public void delete(T entity) {
         mapper.delete(entity);
     }
 
-
     public void deleteById(Object id) {
         mapper.deleteByPrimaryKey(id);
     }
-
 
     public void updateById(T entity) {
         EntityUtils.setUpdatedInfo(entity);
         mapper.updateByPrimaryKey(entity);
     }
 
-
-    public void updateSelectiveById(T entity) {
+    public void updateByIdSelective(T entity) {
         EntityUtils.setUpdatedInfo(entity);
         mapper.updateByPrimaryKeySelective(entity);
-
     }
 
     public List<T> selectByExample(Object example) {
@@ -107,7 +96,7 @@ public abstract class BaseBiz<M extends Mapper<T>, T> {
         }
         Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
         List<T> list = mapper.selectByExample(example);
-        return new TableResultResponse<T>(result.getTotal(), list);
+        return new TableResultResponse<T>((int) result.getTotal(), list);
     }
 
 }

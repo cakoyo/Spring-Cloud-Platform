@@ -1,6 +1,6 @@
 package com.github.wxiaoqi.security.modules.admin.biz;
 
-import com.github.wxiaoqi.security.common.biz.BaseBiz;
+import com.github.wxiaoqi.security.common.biz.MapperAgent;
 import com.github.wxiaoqi.security.modules.admin.constant.AdminCommonConstant;
 import com.github.wxiaoqi.security.modules.admin.entity.Menu;
 import com.github.wxiaoqi.security.modules.admin.mapper.MenuMapper;
@@ -17,12 +17,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class MenuBiz extends BaseBiz<MenuMapper, Menu> {
-    @Override
-    public List<Menu> selectListAll() {
-        return super.selectListAll();
-    }
-
+public class MenuBiz extends MapperAgent<Menu, MenuMapper> {
     @Override
     public void insertSelective(Menu entity) {
         if (AdminCommonConstant.ROOT == entity.getParentId()) {
@@ -43,11 +38,6 @@ public class MenuBiz extends BaseBiz<MenuMapper, Menu> {
             entity.setPath(parent.getPath() + "/" + entity.getCode());
         }
         super.updateById(entity);
-    }
-
-    @Override
-    public void updateSelectiveById(Menu entity) {
-        super.updateSelectiveById(entity);
     }
 
     /**

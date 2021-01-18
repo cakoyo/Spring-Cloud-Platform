@@ -13,7 +13,7 @@ import moe.kira.common.message.impl.base.BasicRestResponse;
  * @create 2017-06-14 22:40
  */
 public class TableResultResponse<T> extends BasicRestResponse<TableData<T>> implements ResultResponse<T> {
-    public TableResultResponse(long total, List<T> rows) {
+    public TableResultResponse(int total, List<T> rows) {
         super(new TableData<T>(total, rows));
     }
 

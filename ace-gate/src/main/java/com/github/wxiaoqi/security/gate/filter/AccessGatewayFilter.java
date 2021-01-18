@@ -14,7 +14,6 @@ import com.github.wxiaoqi.security.gate.handler.RequestBodyRoutePredicateFactory
 import com.github.wxiaoqi.security.gate.service.LogService;
 import com.github.wxiaoqi.security.gate.utils.DBLog;
 import lombok.extern.slf4j.Slf4j;
-import moe.kira.common.message.impl.SimpleResponse;
 import moe.kira.common.message.impl.auth.TokenForbiddenResponse;
 import moe.kira.common.message.impl.base.BasicResponse;
 
@@ -37,7 +36,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -138,7 +137,7 @@ public class AccessGatewayFilter implements GlobalFilter {
 
     private void setCurrentUserInfoAndLog(ServerWebExchange serverWebExchange, IJWTInfo user, PermissionInfo pm) {
         String host = serverWebExchange.getRequest().getRemoteAddress().toString();
-        LogInfo logInfo = new LogInfo(pm.getMenu(), pm.getName(), pm.getUri(), new Date(), user.getId(), user.getName(), host, String.valueOf(serverWebExchange.getAttributes().get(RequestBodyRoutePredicateFactory.REQUEST_BODY_ATTR)));
+        LogInfo logInfo = new LogInfo(pm.getMenu(), pm.getName(), pm.getUri(), Calendar.getInstance().getTime().getTime(), user.getId(), user.getName(), host, String.valueOf(serverWebExchange.getAttributes().get(RequestBodyRoutePredicateFactory.REQUEST_BODY_ATTR)));
         DBLog.getInstance().setLogService(logService).offerQueue(logInfo);
     }
 

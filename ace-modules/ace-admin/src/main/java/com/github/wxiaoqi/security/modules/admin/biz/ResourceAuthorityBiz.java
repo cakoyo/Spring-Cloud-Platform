@@ -2,7 +2,7 @@ package com.github.wxiaoqi.security.modules.admin.biz;
 
 import com.github.wxiaoqi.security.modules.admin.entity.ResourceAuthority;
 import com.github.wxiaoqi.security.modules.admin.mapper.ResourceAuthorityMapper;
-import com.github.wxiaoqi.security.common.biz.BaseBiz;
+import com.github.wxiaoqi.security.common.biz.MapperAgent;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ResourceAuthorityBiz extends BaseBiz<ResourceAuthorityMapper,ResourceAuthority> {
+public class ResourceAuthorityBiz extends MapperAgent<ResourceAuthority, ResourceAuthorityMapper> {
 }

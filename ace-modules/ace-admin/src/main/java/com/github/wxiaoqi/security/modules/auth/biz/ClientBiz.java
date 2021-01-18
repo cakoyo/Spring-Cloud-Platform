@@ -4,7 +4,7 @@ import com.github.wxiaoqi.security.modules.auth.entity.Client;
 import com.github.wxiaoqi.security.modules.auth.entity.ClientService;
 import com.github.wxiaoqi.security.modules.auth.mapper.ClientMapper;
 import com.github.wxiaoqi.security.modules.auth.mapper.ClientServiceMapper;
-import com.github.wxiaoqi.security.common.biz.BaseBiz;
+import com.github.wxiaoqi.security.common.biz.MapperAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2017-12-26 19:43:46
  */
 @Service
-public class ClientBiz extends BaseBiz<ClientMapper,Client> {
+public class ClientBiz extends MapperAgent<Client, ClientMapper> {
     @Autowired
     private ClientServiceMapper clientServiceMapper;
     @Autowired

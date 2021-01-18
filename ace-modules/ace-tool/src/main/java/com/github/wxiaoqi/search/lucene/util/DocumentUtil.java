@@ -26,6 +26,8 @@
 package com.github.wxiaoqi.search.lucene.util;
 
 import com.github.wxiaoqi.security.api.vo.search.IndexObject;
+import com.github.wxiaoqi.security.api.vo.search.IndexObject.IndexObjectBuilder;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Document;
@@ -56,15 +58,15 @@ public class DocumentUtil {
     }  
   
     public static  IndexObject document2IndexObject(Analyzer analyzer, Highlighter highlighter, Document doc,float score) throws Exception {
-        IndexObject indexObject = new IndexObject();
-        indexObject.setId(Long.parseLong(doc.get("id")));
-        indexObject.setTitle(stringFormatHighlighterOut(analyzer, highlighter,doc,"title"));
-        indexObject.setKeywords(stringFormatHighlighterOut(analyzer, highlighter,doc,"summary"));
-        indexObject.setDescripton(stringFormatHighlighterOut(analyzer, highlighter,doc,"descripton"));
-        indexObject.setPostDate(doc.get("postDate"));
-        indexObject.setUrl(doc.get("url"));
-        indexObject.setScore(score);
-        return indexObject;
+        IndexObjectBuilder indexObject = IndexObject.builder();
+        indexObject.id(Long.parseLong(doc.get("id")));
+        indexObject.title(stringFormatHighlighterOut(analyzer, highlighter,doc,"title"));
+        indexObject.keywords(stringFormatHighlighterOut(analyzer, highlighter,doc,"summary"));
+        indexObject.descripton(stringFormatHighlighterOut(analyzer, highlighter,doc,"descripton"));
+        indexObject.postDate(doc.get("postDate"));
+        indexObject.url(doc.get("url"));
+        indexObject.score(score);
+        return indexObject.build();
     }
 
 

@@ -1,6 +1,6 @@
 package com.github.wxiaoqi.security.common.rest;
 
-import com.github.wxiaoqi.security.common.biz.BaseBiz;
+import com.github.wxiaoqi.security.common.biz.MapperAgent;
 import com.github.wxiaoqi.security.common.context.BaseContextHandler;
 import com.github.wxiaoqi.security.common.util.Query;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +23,11 @@ import java.util.Map;
  * @create 2017-06-15 8:48
  */
 @Slf4j
-public class BaseController<Biz extends BaseBiz,Entity> {
+public class BaseController<M extends MapperAgent, Entity> {
     @Autowired
     protected HttpServletRequest request;
     @Autowired
-    protected Biz baseBiz;
+    protected M baseBiz;
 
     @RequestMapping(value = "",method = RequestMethod.POST)
     @ResponseBody
@@ -46,7 +46,7 @@ public class BaseController<Biz extends BaseBiz,Entity> {
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
     @ResponseBody
     public SimpleResponse update(@RequestBody Entity entity){
-        baseBiz.updateSelectiveById(entity);
+        baseBiz.updateByIdSelective(entity);
         return Responses.normalize();
     }
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
@@ -59,7 +59,7 @@ public class BaseController<Biz extends BaseBiz,Entity> {
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<List<Entity>> all(){
-        return new ObjectRestResponse<>(baseBiz.selectListAll());
+        return new ObjectRestResponse<>(baseBiz.selectAll());
     }
     @RequestMapping(value = "/page",method = RequestMethod.GET)
     @ResponseBody

@@ -1,6 +1,6 @@
 package com.github.wxiaoqi.security.modules.admin.biz;
 
-import com.github.wxiaoqi.security.common.biz.BaseBiz;
+import com.github.wxiaoqi.security.common.biz.MapperAgent;
 import com.github.wxiaoqi.security.modules.admin.constant.AdminCommonConstant;
 import com.github.wxiaoqi.security.modules.admin.entity.Group;
 import com.github.wxiaoqi.security.modules.admin.entity.Menu;
@@ -27,7 +27,7 @@ import java.util.*;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GroupBiz extends BaseBiz<GroupMapper, Group> {
+public class GroupBiz extends MapperAgent<Group, GroupMapper> {
     @Autowired
     private UserMapper userMapper;
     @Autowired

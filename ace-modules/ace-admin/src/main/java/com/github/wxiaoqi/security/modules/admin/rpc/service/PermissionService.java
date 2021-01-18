@@ -73,7 +73,7 @@ public class PermissionService {
         String key = RedisKeyConstant.REDIS_KEY_ALL_PERMISISON;
         String s = stringRedisTemplate.opsForValue().get(key);
         if (s == null || org.apache.commons.lang.StringUtils.isBlank(s)) {
-            List<Menu> menus = menuBiz.selectListAll();
+            List<Menu> menus = menuBiz.selectAll();
             List<PermissionInfo> result = new ArrayList<PermissionInfo>();
             menu2permission(menus, result);
             List<Element> elements = elementBiz.getAllElementPermissions();
@@ -91,19 +91,20 @@ public class PermissionService {
             if (StringUtils.isBlank(menu.getHref())) {
                 menu.setHref("/" + menu.getCode());
             }
-            info = new PermissionInfo();
-            info.setCode(menu.getCode());
-            info.setType(AdminCommonConstant.RESOURCE_TYPE_MENU);
-            info.setName(AdminCommonConstant.RESOURCE_ACTION_VISIT);
+            
             String uri = menu.getHref();
             if (!uri.startsWith("/")) {
                 uri = "/" + uri;
             }
-            info.setUri(uri);
-            info.setMethod(AdminCommonConstant.RESOURCE_REQUEST_METHOD_GET);
-            result.add(info
-            );
-            info.setMenu(menu.getTitle());
+            
+            info = PermissionInfo.builder()
+                    .code(menu.getCode())
+                    .type(AdminCommonConstant.RESOURCE_TYPE_MENU)
+                    .uri(uri)
+                    .method(AdminCommonConstant.RESOURCE_REQUEST_METHOD_GET)
+                    .name(AdminCommonConstant.RESOURCE_ACTION_VISIT)
+                    .menu(menu.getTitle())
+                    .build();
         }
     }
 
@@ -128,13 +129,16 @@ public class PermissionService {
     private void element2permission(List<PermissionInfo> result, List<Element> elements) {
         PermissionInfo info;
         for (Element element : elements) {
-            info = new PermissionInfo();
-            info.setCode(element.getCode());
-            info.setType(element.getType());
-            info.setUri(element.getUri());
-            info.setMethod(element.getMethod());
-            info.setName(element.getName());
-            info.setMenu(element.getMenuId());
+            
+            info = PermissionInfo.builder()
+                .code(element.getCode())
+                .type(element.getType())
+                .uri(element.getUri())
+                .method(element.getMethod())
+                .name(element.getName())
+                .menu(element.getMenuId())
+                .build();
+            
             result.add(info);
         }
     }
