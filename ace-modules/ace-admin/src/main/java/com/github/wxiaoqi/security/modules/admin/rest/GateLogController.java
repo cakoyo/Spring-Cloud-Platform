@@ -1,11 +1,12 @@
 package com.github.wxiaoqi.security.modules.admin.rest;
 
 import com.github.pagehelper.PageHelper;
-import com.github.wxiaoqi.security.common.msg.TableResultResponse;
 import com.github.wxiaoqi.security.common.rest.BaseController;
 import com.github.wxiaoqi.security.modules.admin.biz.GateLogBiz;
 import com.github.wxiaoqi.security.modules.admin.entity.GateLog;
 import io.micrometer.core.instrument.util.StringUtils;
+import moe.kira.common.message.impl.TableResultResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

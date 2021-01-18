@@ -2,10 +2,12 @@ package com.github.wxiaoqi.security.common.rest;
 
 import com.github.wxiaoqi.security.common.biz.BaseBiz;
 import com.github.wxiaoqi.security.common.context.BaseContextHandler;
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
-import com.github.wxiaoqi.security.common.msg.TableResultResponse;
 import com.github.wxiaoqi.security.common.util.Query;
 import lombok.extern.slf4j.Slf4j;
+import moe.kira.common.message.impl.ObjectRestResponse;
+import moe.kira.common.message.impl.SimpleResponse;
+import moe.kira.common.message.impl.TableResultResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,37 +30,35 @@ public class BaseController<Biz extends BaseBiz,Entity> {
 
     @RequestMapping(value = "",method = RequestMethod.POST)
     @ResponseBody
-    public ObjectRestResponse<Entity> add(@RequestBody Entity entity){
+    public SimpleResponse add(@RequestBody Entity entity){
         baseBiz.insertSelective(entity);
-        return new ObjectRestResponse<Entity>();
+        return new SimpleResponse();
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<Entity> get(@PathVariable int id){
-        ObjectRestResponse<Entity> entityObjectRestResponse = new ObjectRestResponse<>();
-        Object o = baseBiz.selectById(id);
-        entityObjectRestResponse.data((Entity)o);
-        return entityObjectRestResponse;
+        Entity o = (Entity) baseBiz.selectById(id);
+        return new ObjectRestResponse<>(o);
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
     @ResponseBody
-    public ObjectRestResponse<Entity> update(@RequestBody Entity entity){
+    public SimpleResponse update(@RequestBody Entity entity){
         baseBiz.updateSelectiveById(entity);
-        return new ObjectRestResponse<Entity>();
+        return new SimpleResponse();
     }
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     @ResponseBody
-    public ObjectRestResponse<Entity> remove(@PathVariable int id){
+    public SimpleResponse remove(@PathVariable int id){
         baseBiz.deleteById(id);
-        return new ObjectRestResponse<Entity>();
+        return new SimpleResponse();
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<List<Entity>> all(){
-        return new ObjectRestResponse<>().data(baseBiz.selectListAll());
+        return new ObjectRestResponse<>(baseBiz.selectListAll());
     }
     @RequestMapping(value = "/page",method = RequestMethod.GET)
     @ResponseBody

@@ -1,6 +1,5 @@
 package com.github.wxiaoqi.security.modules.admin.rest;
 
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
 import com.github.wxiaoqi.security.common.rest.BaseController;
 import com.github.wxiaoqi.security.modules.admin.biz.MenuBiz;
 import com.github.wxiaoqi.security.modules.admin.biz.UserBiz;
@@ -10,6 +9,9 @@ import com.github.wxiaoqi.security.modules.admin.rpc.service.PermissionService;
 import com.github.wxiaoqi.security.modules.admin.vo.FrontUser;
 import com.github.wxiaoqi.security.modules.admin.vo.FrontUserV2;
 import com.github.wxiaoqi.security.modules.admin.vo.MenuTree;
+
+import moe.kira.common.message.impl.ObjectRestResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +51,7 @@ public class UserController extends BaseController<UserBiz,User> {
     @ResponseBody
     public ObjectRestResponse getUserInfoV2() throws Exception {
         FrontUserV2 userInfo = permissionService.getUserInfoV2();
-        return new ObjectRestResponse<FrontUserV2>().data(userInfo);
+        return new ObjectRestResponse<FrontUserV2>(userInfo);
     }
 
     @RequestMapping(value = "/front/menus", method = RequestMethod.GET)

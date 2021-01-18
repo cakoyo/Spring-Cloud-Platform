@@ -1,11 +1,13 @@
 package com.github.wxiaoqi.security.modules.admin.rest;
 
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
 import com.github.wxiaoqi.security.modules.admin.biz.MenuBiz;
 import com.github.wxiaoqi.security.modules.admin.biz.UserBiz;
 import com.github.wxiaoqi.security.modules.admin.entity.Menu;
 import com.github.wxiaoqi.security.modules.admin.vo.AuthorityMenuTree;
 import com.github.wxiaoqi.security.modules.admin.vo.MenuTree;
+
+import moe.kira.common.message.impl.ObjectRestResponse;
+
 import com.github.wxiaoqi.security.common.rest.BaseController;
 import com.github.wxiaoqi.security.common.util.TreeUtil;
 import com.github.wxiaoqi.security.modules.admin.constant.AdminCommonConstant;
@@ -40,7 +42,7 @@ public class MenuController extends BaseController<MenuBiz, Menu> {
         if (StringUtils.isNotBlank(title)) {
             example.createCriteria().andLike("title", "%" + title + "%");
         }
-        return new ObjectRestResponse<>().data(baseBiz.selectByExample(example));
+        return new ObjectRestResponse<>(baseBiz.selectByExample(example));
     }
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
@@ -50,7 +52,7 @@ public class MenuController extends BaseController<MenuBiz, Menu> {
         if (StringUtils.isNotBlank(title)) {
             example.createCriteria().andLike("title", "%" + title + "%");
         }
-        return new ObjectRestResponse<>().data(getMenuTree(baseBiz.selectByExample(example), AdminCommonConstant.ROOT));
+        return new ObjectRestResponse<>(getMenuTree(baseBiz.selectByExample(example), AdminCommonConstant.ROOT));
     }
 
 

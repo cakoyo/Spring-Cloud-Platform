@@ -9,13 +9,15 @@ import com.github.wxiaoqi.security.auth.client.jwt.UserAuthUtil;
 import com.github.wxiaoqi.security.common.constant.RedisKeyConstant;
 import com.github.wxiaoqi.security.common.context.BaseContextHandler;
 import com.github.wxiaoqi.security.common.exception.auth.UserTokenException;
-import com.github.wxiaoqi.security.common.msg.BaseResponse;
-import com.github.wxiaoqi.security.common.msg.auth.TokenForbiddenResponse;
 import com.github.wxiaoqi.security.common.util.jwt.IJWTInfo;
 import com.github.wxiaoqi.security.gate.handler.RequestBodyRoutePredicateFactory;
 import com.github.wxiaoqi.security.gate.service.LogService;
 import com.github.wxiaoqi.security.gate.utils.DBLog;
 import lombok.extern.slf4j.Slf4j;
+import moe.kira.common.message.impl.SimpleResponse;
+import moe.kira.common.message.impl.auth.TokenForbiddenResponse;
+import moe.kira.common.message.impl.base.BasicResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +128,7 @@ public class AccessGatewayFilter implements GlobalFilter {
      * @param body
      */
     @NotNull
-    private Mono<Void> getVoidMono(ServerWebExchange serverWebExchange, BaseResponse body, HttpStatus status) {
+    private Mono<Void> getVoidMono(ServerWebExchange serverWebExchange, BasicResponse body, HttpStatus status) {
         serverWebExchange.getResponse().setStatusCode(status);
         byte[] bytes = JSONObject.toJSONString(body).getBytes(StandardCharsets.UTF_8);
         DataBuffer buffer = serverWebExchange.getResponse().bufferFactory().wrap(bytes);

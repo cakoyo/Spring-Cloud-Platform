@@ -1,10 +1,12 @@
 package com.github.wxiaoqi.security.modules.auth.controller;
 
 import com.github.wxiaoqi.security.common.exception.auth.UserInvalidException;
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
 import com.github.wxiaoqi.security.modules.auth.service.AuthService;
 import com.github.wxiaoqi.security.modules.auth.util.user.JwtAuthenticationRequest;
 import lombok.extern.slf4j.Slf4j;
+import moe.kira.common.message.impl.ObjectRestResponse;
+import moe.kira.common.message.impl.SimpleResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,7 +37,7 @@ public class AuthController {
     private StringRedisTemplate stringRedisTemplate;
 
     @RequestMapping(value = "token", method = RequestMethod.POST)
-    public ObjectRestResponse<String> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
+    public ObjectRestResponse<Map> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
 
         log.info(authenticationRequest.getUsername() + " require logging...");
         // 获取session中的验证码
@@ -49,7 +51,7 @@ public class AuthController {
         }
         Map result = authService.login(authenticationRequest);
 
-        return new ObjectRestResponse<>().data(result);
+        return new ObjectRestResponse<Map>(result);
     }
 
     @RequestMapping(value = "refresh", method = RequestMethod.GET)
@@ -57,19 +59,19 @@ public class AuthController {
             HttpServletRequest request) throws Exception {
         String token = request.getHeader(tokenHeader);
         String refreshedToken = authService.refresh(token);
-        return new ObjectRestResponse<>().data(refreshedToken);
+        return new ObjectRestResponse<>(refreshedToken);
     }
 
     @RequestMapping(value = "verify", method = RequestMethod.GET)
-    public ObjectRestResponse<?> verify(String token) throws Exception {
+    public SimpleResponse verify(String token) throws Exception {
         authService.validate(token);
-        return new ObjectRestResponse<>();
+        return new SimpleResponse();
     }
 
     @RequestMapping(value = "logout", method = RequestMethod.DELETE)
-    public ObjectRestResponse<?> logout(String token) throws Exception {
+    public SimpleResponse logout(String token) throws Exception {
         authService.logout(token);
-        return new ObjectRestResponse<>();
+        return new SimpleResponse();
     }
 
 }

@@ -1,10 +1,13 @@
 package com.github.wxiaoqi.security.modules.auth.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
-import com.github.wxiaoqi.security.common.msg.TableResultResponse;
 import com.github.wxiaoqi.security.common.constant.RedisKeyConstant;
 import com.github.wxiaoqi.security.modules.admin.entity.OnlineLog;
+
+import moe.kira.common.message.impl.ObjectRestResponse;
+import moe.kira.common.message.impl.SimpleResponse;
+import moe.kira.common.message.impl.TableResultResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,10 +49,10 @@ public class OnlineController {
 
 
     @RequestMapping("/{id}")
-    public ObjectRestResponse forceLogout(@PathVariable("id") String tokenId) {
+    public SimpleResponse forceLogout(@PathVariable("id") String tokenId) {
         stringRedisTemplate.delete(RedisKeyConstant.REDIS_KEY_TOKEN + ":" + tokenId);
         stringRedisTemplate.opsForZSet().remove(RedisKeyConstant.REDIS_KEY_TOKEN, tokenId);
-        return new ObjectRestResponse<>();
+        return new SimpleResponse();
     }
 
 }

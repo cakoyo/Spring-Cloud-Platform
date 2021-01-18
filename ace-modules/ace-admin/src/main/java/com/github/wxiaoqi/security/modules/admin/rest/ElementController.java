@@ -3,8 +3,10 @@ package com.github.wxiaoqi.security.modules.admin.rest;
 import com.github.wxiaoqi.security.modules.admin.biz.ElementBiz;
 import com.github.wxiaoqi.security.modules.admin.biz.UserBiz;
 import com.github.wxiaoqi.security.modules.admin.entity.Element;
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
-import com.github.wxiaoqi.security.common.msg.TableResultResponse;
+
+import moe.kira.common.message.impl.ObjectRestResponse;
+import moe.kira.common.message.impl.TableResultResponse;
+
 import com.github.wxiaoqi.security.common.rest.BaseController;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +47,17 @@ public class ElementController extends BaseController<ElementBiz, Element> {
 
   @RequestMapping(value = "/user", method = RequestMethod.GET)
   @ResponseBody
-  public ObjectRestResponse<Element> getAuthorityElement(String menuId) {
+  public ObjectRestResponse<List<Element>> getAuthorityElement(String menuId) {
     int userId = userBiz.getUserByUsername(getCurrentUserName()).getId();
     List<Element> elements = baseBiz.getAuthorityElementByUserId(userId + "",menuId);
-    return new ObjectRestResponse<List<Element>>().data(elements);
+    return new ObjectRestResponse<List<Element>>(elements);
   }
 
   @RequestMapping(value = "/user/menu", method = RequestMethod.GET)
   @ResponseBody
-  public ObjectRestResponse<Element> getAuthorityElement() {
+  public ObjectRestResponse<List<Element>> getAuthorityElement() {
     int userId = userBiz.getUserByUsername(getCurrentUserName()).getId();
     List<Element> elements = baseBiz.getAuthorityElementByUserId(userId + "");
-    return new ObjectRestResponse<List<Element>>().data(elements);
+    return new ObjectRestResponse<List<Element>>(elements);
   }
 }

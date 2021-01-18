@@ -1,12 +1,13 @@
-package com.github.wxiaoqi.security.common.msg.auth;
+package moe.kira.common.message.impl.auth;
 
 import com.github.wxiaoqi.security.common.constant.RestCodeConstants;
-import com.github.wxiaoqi.security.common.msg.BaseResponse;
+
+import moe.kira.common.message.impl.base.BasicResponse;
 
 /**
  * Created by ace on 2017/8/25.
  */
-public class TokenForbiddenResponse  extends BaseResponse {
+public class TokenForbiddenResponse extends BasicResponse {
     public TokenForbiddenResponse(String message) {
         super(RestCodeConstants.TOKEN_FORBIDDEN_CODE, message);
     }

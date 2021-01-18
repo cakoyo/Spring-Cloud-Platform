@@ -3,9 +3,11 @@ package com.github.wxiaoqi.security.auth.client.runner;
 import com.github.wxiaoqi.security.auth.client.config.ServiceAuthConfig;
 import com.github.wxiaoqi.security.auth.client.config.UserAuthConfig;
 import com.github.wxiaoqi.security.auth.client.feign.ServiceAuthFeign;
-import com.github.wxiaoqi.security.common.msg.BaseResponse;
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
+
 import lombok.extern.slf4j.Slf4j;
+import moe.kira.common.message.impl.ObjectRestResponse;
+import moe.kira.common.message.impl.SimpleResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -40,9 +42,8 @@ public class AuthClientRunner implements CommandLineRunner {
     }
     @Scheduled(cron = "0 0/1 * * * ?")
     public void refreshUserPubKey(){
-        BaseResponse resp = serviceAuthFeign.getUserPublicKey(serviceAuthConfig.getClientId(), serviceAuthConfig.getClientSecret());
-        if (resp.getStatusCode() == HttpStatus.OK.value()) {
-            ObjectRestResponse<byte[]> userResponse = (ObjectRestResponse<byte[]>) resp;
+        ObjectRestResponse<byte[]> userResponse = serviceAuthFeign.getUserPublicKey(serviceAuthConfig.getClientId(), serviceAuthConfig.getClientSecret());
+        if (userResponse.getStatusCode() == HttpStatus.OK.value()) {
             this.userAuthConfig.setPubKeyByte(userResponse.getData());
         }
     }

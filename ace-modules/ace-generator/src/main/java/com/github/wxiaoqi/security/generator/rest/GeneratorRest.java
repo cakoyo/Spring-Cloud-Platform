@@ -24,10 +24,12 @@
 package com.github.wxiaoqi.security.generator.rest;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.github.wxiaoqi.security.common.msg.TableResultResponse;
 import com.github.wxiaoqi.security.common.util.Query;
 import com.github.wxiaoqi.security.generator.config.SwitchDB;
 import com.github.wxiaoqi.security.generator.service.GeneratorService;
+
+import moe.kira.common.message.impl.TableResultResponse;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

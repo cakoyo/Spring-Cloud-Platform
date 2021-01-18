@@ -27,7 +27,9 @@ package com.github.wxiaoqi.oss.controller;
 
 import com.github.wxiaoqi.oss.cloud.OSSFactory;
 import com.github.wxiaoqi.security.common.exception.BaseException;
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
+
+import moe.kira.common.message.impl.ObjectRestResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +58,7 @@ public class OssController{
 		//上传文件
 		String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 		String url = ossFactory.build().uploadSuffix(file.getBytes(), suffix);
-		return new ObjectRestResponse<>().data(url);
+		return new ObjectRestResponse<>(url);
 	}
 
 

@@ -7,10 +7,12 @@ import com.github.wxiaoqi.security.modules.admin.entity.Group;
 import com.github.wxiaoqi.security.modules.admin.vo.AuthorityMenuTree;
 import com.github.wxiaoqi.security.modules.admin.vo.GroupTree;
 import com.github.wxiaoqi.security.modules.admin.vo.GroupUsers;
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
 import com.github.wxiaoqi.security.common.rest.BaseController;
 import com.github.wxiaoqi.security.common.util.TreeUtil;
 import io.swagger.annotations.Api;
+import moe.kira.common.message.impl.ObjectRestResponse;
+import moe.kira.common.message.impl.SimpleResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,7 @@ public class GroupController extends BaseController<GroupBiz, Group> {
     @ResponseBody
     public ObjectRestResponse<List<Group>> list(String name,String groupType) {
         if(StringUtils.isBlank(name)&&StringUtils.isBlank(groupType)) {
-            return new ObjectRestResponse<>().data(new ArrayList<Group>());
+            return new ObjectRestResponse<>(new ArrayList<Group>());
         }
         Example example = new Example(Group.class);
         if (StringUtils.isNotBlank(name)) {
@@ -51,56 +53,56 @@ public class GroupController extends BaseController<GroupBiz, Group> {
             example.createCriteria().andEqualTo("groupType", groupType);
         }
 
-        return new ObjectRestResponse().data(baseBiz.selectByExample(example));
+        return new ObjectRestResponse(baseBiz.selectByExample(example));
     }
 
 
 
     @RequestMapping(value = "/{id}/user", method = RequestMethod.PUT)
     @ResponseBody
-    public ObjectRestResponse modifiyUsers(@PathVariable int id,String members,String leaders){
+    public SimpleResponse modifiyUsers(@PathVariable int id,String members,String leaders){
         baseBiz.modifyGroupUsers(id, members, leaders);
-        return new ObjectRestResponse();
+        return new SimpleResponse();
     }
 
     @RequestMapping(value = "/{id}/user", method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<GroupUsers> getUsers(@PathVariable int id){
-        return new ObjectRestResponse<GroupUsers>().data(baseBiz.getGroupUsers(id));
+        return new ObjectRestResponse<GroupUsers>(baseBiz.getGroupUsers(id));
     }
 
     @RequestMapping(value = "/{id}/authority/menu", method = RequestMethod.PUT)
     @ResponseBody
-    public ObjectRestResponse modifyMenuAuthority(@PathVariable  int id, String menuTrees){
+    public SimpleResponse modifyMenuAuthority(@PathVariable  int id, String menuTrees){
         String [] menus = menuTrees.split(",");
         baseBiz.modifyAuthorityMenu(id, menus);
-        return new ObjectRestResponse();
+        return new SimpleResponse();
     }
 
     @RequestMapping(value = "/{id}/authority/menu", method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<List<AuthorityMenuTree>> getMenuAuthority(@PathVariable  int id){
-        return new ObjectRestResponse().data(baseBiz.getAuthorityMenu(id));
+        return new ObjectRestResponse(baseBiz.getAuthorityMenu(id));
     }
 
     @RequestMapping(value = "/{id}/authority/element/add", method = RequestMethod.PUT)
     @ResponseBody
-    public ObjectRestResponse addElementAuthority(@PathVariable  int id,int menuId, int elementId){
+    public SimpleResponse addElementAuthority(@PathVariable  int id,int menuId, int elementId){
         baseBiz.modifyAuthorityElement(id,menuId,elementId);
-        return new ObjectRestResponse();
+        return new SimpleResponse();
     }
 
     @RequestMapping(value = "/{id}/authority/element/remove", method = RequestMethod.PUT)
     @ResponseBody
-    public ObjectRestResponse removeElementAuthority(@PathVariable int id,int menuId, int elementId){
+    public SimpleResponse removeElementAuthority(@PathVariable int id,int menuId, int elementId){
         baseBiz.removeAuthorityElement(id,menuId,elementId);
-        return new ObjectRestResponse();
+        return new SimpleResponse();
     }
 
     @RequestMapping(value = "/{id}/authority/element", method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<List<Integer>> getElementAuthority(@PathVariable  int id){
-        return new ObjectRestResponse().data(baseBiz.getAuthorityElement(id));
+        return new ObjectRestResponse(baseBiz.getAuthorityElement(id));
     }
 
 
@@ -108,7 +110,7 @@ public class GroupController extends BaseController<GroupBiz, Group> {
     @ResponseBody
     public ObjectRestResponse<List<GroupTree>> tree(String name, String groupType) {
         if(StringUtils.isBlank(name)&&StringUtils.isBlank(groupType)) {
-            return new ObjectRestResponse<>().data(new ArrayList<GroupTree>());
+            return new ObjectRestResponse<>(new ArrayList<GroupTree>());
         }
         Example example = new Example(Group.class);
         if (StringUtils.isNotBlank(name)) {
@@ -117,7 +119,7 @@ public class GroupController extends BaseController<GroupBiz, Group> {
         if (StringUtils.isNotBlank(groupType)) {
             example.createCriteria().andEqualTo("groupType", groupType);
         }
-        return  new ObjectRestResponse<>().data(getTree(baseBiz.selectByExample(example), AdminCommonConstant.ROOT));
+        return  new ObjectRestResponse<>(getTree(baseBiz.selectByExample(example), AdminCommonConstant.ROOT));
     }
 
 

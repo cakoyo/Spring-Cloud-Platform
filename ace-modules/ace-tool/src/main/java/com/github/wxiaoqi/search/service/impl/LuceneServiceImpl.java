@@ -26,9 +26,12 @@
 package com.github.wxiaoqi.search.service.impl;
 
 import com.github.wxiaoqi.security.api.vo.search.IndexObject;
+
+import moe.kira.common.message.impl.TableResultResponse;
+
 import com.github.wxiaoqi.search.lucene.LuceneDao;
 import com.github.wxiaoqi.search.service.LuceneService;
-import com.github.wxiaoqi.security.common.msg.TableResultResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

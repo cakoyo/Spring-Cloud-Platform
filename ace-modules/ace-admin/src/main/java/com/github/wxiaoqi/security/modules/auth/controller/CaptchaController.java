@@ -1,10 +1,12 @@
 package com.github.wxiaoqi.security.modules.auth.controller;
 
 import com.alibaba.druid.util.Base64;
-import com.github.wxiaoqi.security.common.msg.ObjectRestResponse;
 import com.github.wxiaoqi.security.common.util.UUIDUtils;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
+
+import moe.kira.common.message.impl.ObjectRestResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +52,6 @@ public class CaptchaController {
         Map map = new HashMap<>();
         map.put("captcha", captcha);
         map.put("uuid", uuid);
-        return new ObjectRestResponse().data(map);
+        return new ObjectRestResponse(map);
     }
 }
