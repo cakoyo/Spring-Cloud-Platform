@@ -15,5 +15,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GroupTypeBiz extends MapperAgent<GroupType, GroupTypeMapper> {
+public class GroupTypeAgent extends MapperAgent<GroupType, GroupTypeMapper> {
 }

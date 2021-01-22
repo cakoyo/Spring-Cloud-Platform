@@ -1,6 +1,6 @@
 package com.github.wxiaoqi.security.modules.admin.rest;
 
-import com.github.wxiaoqi.security.modules.admin.biz.GroupTypeBiz;
+import com.github.wxiaoqi.security.modules.admin.biz.GroupTypeAgent;
 import com.github.wxiaoqi.security.modules.admin.entity.GroupType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,7 @@ import com.github.wxiaoqi.security.common.rest.BaseController;
  */
 @Controller
 @RequestMapping("groupType")
-public class GroupTypeController extends BaseController<GroupTypeBiz,GroupType> {
+public class GroupTypeController extends BaseController<GroupTypeAgent,GroupType> {
 //
 //    @RequestMapping(value = "/page",method = RequestMethod.GET)
 //    @ResponseBody

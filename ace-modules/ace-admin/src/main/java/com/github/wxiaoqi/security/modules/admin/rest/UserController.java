@@ -1,8 +1,8 @@
 package com.github.wxiaoqi.security.modules.admin.rest;
 
 import com.github.wxiaoqi.security.common.rest.BaseController;
-import com.github.wxiaoqi.security.modules.admin.biz.MenuBiz;
-import com.github.wxiaoqi.security.modules.admin.biz.UserBiz;
+import com.github.wxiaoqi.security.modules.admin.biz.MenuAgent;
+import com.github.wxiaoqi.security.modules.admin.biz.UserAgent;
 import com.github.wxiaoqi.security.modules.admin.entity.Menu;
 import com.github.wxiaoqi.security.modules.admin.entity.User;
 import com.github.wxiaoqi.security.modules.admin.rpc.service.PermissionService;
@@ -29,12 +29,12 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("user")
-public class UserController extends BaseController<UserBiz,User> {
+public class UserController extends BaseController<UserAgent,User> {
     @Autowired
     private PermissionService permissionService;
 
     @Autowired
-    private MenuBiz menuBiz;
+    private MenuAgent menuBiz;
 
     @RequestMapping(value = "/front/info", method = RequestMethod.GET)
     @ResponseBody

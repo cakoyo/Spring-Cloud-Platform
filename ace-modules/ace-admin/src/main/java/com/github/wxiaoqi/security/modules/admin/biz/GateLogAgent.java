@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GateLogBiz extends MapperAgent<GateLog, GateLogMapper> {
+public class GateLogAgent extends MapperAgent<GateLog, GateLogMapper> {
 
     @Override
     public void insert(GateLog entity) {

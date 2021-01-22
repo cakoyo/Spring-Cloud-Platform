@@ -1,7 +1,7 @@
 package com.github.wxiaoqi.security.modules.admin.rest;
 
-import com.github.wxiaoqi.security.modules.admin.biz.GroupBiz;
-import com.github.wxiaoqi.security.modules.admin.biz.ResourceAuthorityBiz;
+import com.github.wxiaoqi.security.modules.admin.biz.GroupAgent;
+import com.github.wxiaoqi.security.modules.admin.biz.ResourceAuthorityAgent;
 import com.github.wxiaoqi.security.modules.admin.constant.AdminCommonConstant;
 import com.github.wxiaoqi.security.modules.admin.entity.Group;
 import com.github.wxiaoqi.security.modules.admin.vo.AuthorityMenuTree;
@@ -36,9 +36,9 @@ import java.util.List;
 @Controller
 @RequestMapping("group")
 @Api("群组模块")
-public class GroupController extends BaseController<GroupBiz, Group> {
+public class GroupController extends BaseController<GroupAgent, Group> {
     @Autowired
-    private ResourceAuthorityBiz resourceAuthorityBiz;
+    private ResourceAuthorityAgent resourceAuthorityBiz;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody

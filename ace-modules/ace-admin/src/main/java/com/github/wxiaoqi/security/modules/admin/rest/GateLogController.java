@@ -2,7 +2,7 @@ package com.github.wxiaoqi.security.modules.admin.rest;
 
 import com.github.pagehelper.PageHelper;
 import com.github.wxiaoqi.security.common.rest.BaseController;
-import com.github.wxiaoqi.security.modules.admin.biz.GateLogBiz;
+import com.github.wxiaoqi.security.modules.admin.biz.GateLogAgent;
 import com.github.wxiaoqi.security.modules.admin.entity.GateLog;
 import io.micrometer.core.instrument.util.StringUtils;
 import moe.kira.common.message.impl.TableResultResponse;
@@ -22,7 +22,7 @@ import tk.mybatis.mapper.entity.Example;
  */
 @Controller
 @RequestMapping("gateLog")
-public class GateLogController extends BaseController<GateLogBiz,GateLog> {
+public class GateLogController extends BaseController<GateLogAgent,GateLog> {
     @RequestMapping(value = "/pageByOrder",method = RequestMethod.GET)
     @ResponseBody
     public TableResultResponse<GateLog> page(@RequestParam(defaultValue = "10") int limit, @RequestParam(defaultValue = "1")int offset, String name){

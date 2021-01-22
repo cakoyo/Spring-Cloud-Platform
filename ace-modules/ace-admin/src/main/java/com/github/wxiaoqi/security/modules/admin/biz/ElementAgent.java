@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ElementBiz extends MapperAgent<Element, ElementMapper> {
+public class ElementAgent extends MapperAgent<Element, ElementMapper> {
     public List<Element> getAuthorityElementByUserId(String userId){
        return mapper.selectAuthorityElementByUserId(userId);
     }

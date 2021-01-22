@@ -8,9 +8,9 @@ import com.github.wxiaoqi.security.api.vo.user.UserInfo;
 import com.github.wxiaoqi.security.common.constant.CommonConstants;
 import com.github.wxiaoqi.security.common.context.BaseContextHandler;
 import com.github.wxiaoqi.security.common.util.TreeUtil;
-import com.github.wxiaoqi.security.modules.admin.biz.ElementBiz;
-import com.github.wxiaoqi.security.modules.admin.biz.MenuBiz;
-import com.github.wxiaoqi.security.modules.admin.biz.UserBiz;
+import com.github.wxiaoqi.security.modules.admin.biz.ElementAgent;
+import com.github.wxiaoqi.security.modules.admin.biz.MenuAgent;
+import com.github.wxiaoqi.security.modules.admin.biz.UserAgent;
 import com.github.wxiaoqi.security.modules.admin.constant.AdminCommonConstant;
 import com.github.wxiaoqi.security.common.constant.RedisKeyConstant;
 import com.github.wxiaoqi.security.modules.admin.entity.Element;
@@ -39,11 +39,11 @@ import java.util.stream.Stream;
 @Service
 public class PermissionService {
     @Autowired
-    private UserBiz userBiz;
+    private UserAgent userBiz;
     @Autowired
-    private MenuBiz menuBiz;
+    private MenuAgent menuBiz;
     @Autowired
-    private ElementBiz elementBiz;
+    private ElementAgent elementBiz;
     @Autowired
     private JwtTokenUtil userAuthUtil;
     private Sha256PasswordEncoder encoder = new Sha256PasswordEncoder();
@@ -72,7 +72,7 @@ public class PermissionService {
     public List<PermissionInfo> getAllPermission() {
         String key = RedisKeyConstant.REDIS_KEY_ALL_PERMISISON;
         String s = stringRedisTemplate.opsForValue().get(key);
-        if (s == null || org.apache.commons.lang.StringUtils.isBlank(s)) {
+        if (s == null || StringUtils.isBlank(s)) {
             List<Menu> menus = menuBiz.selectAll();
             List<PermissionInfo> result = new ArrayList<PermissionInfo>();
             menu2permission(menus, result);
@@ -111,7 +111,7 @@ public class PermissionService {
     public List<PermissionInfo> getPermissionByUsername(String username) {
         String key = String.format(RedisKeyConstant.REDIS_KEY_USER_PERMISISON, username);
         String s = stringRedisTemplate.opsForValue().get(key);
-        if (s == null || org.apache.commons.lang.StringUtils.isBlank(s)) {
+        if (s == null || StringUtils.isBlank(s)) {
             User user = userBiz.getUserByUsername(username);
             List<Menu> menus = menuBiz.getUserAuthorityMenuByUserId(user.getId());
             List<PermissionInfo> result = new ArrayList<PermissionInfo>();

@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class MenuBiz extends MapperAgent<Menu, MenuMapper> {
+public class MenuAgent extends MapperAgent<Menu, MenuMapper> {
     @Override
     public void insertSelective(Menu entity) {
         if (AdminCommonConstant.ROOT == entity.getParentId()) {

@@ -193,7 +193,7 @@ public class LuceneDao {
 			    log.info("相关度得分：" + score);
 			}
 			Collections.sort(searchResults);
-			pageQuery = new TableResultResponse<>(topDocs.totalHits,searchResults);
+			pageQuery = new TableResultResponse<IndexObject>(topDocs.totalHits, searchResults);
 
 		} catch (Exception e) {
 			e.printStackTrace();

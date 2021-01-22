@@ -11,6 +11,6 @@ public class TableData<T> {
         return new TableData<T>(0, Collections.emptyList());
     }
     
-    private final int total;
+    private final long total;
     private final List<T> rows;
 }

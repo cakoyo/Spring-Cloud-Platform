@@ -1,7 +1,7 @@
 package com.github.wxiaoqi.security.modules.admin.rest;
 
-import com.github.wxiaoqi.security.modules.admin.biz.MenuBiz;
-import com.github.wxiaoqi.security.modules.admin.biz.UserBiz;
+import com.github.wxiaoqi.security.modules.admin.biz.MenuAgent;
+import com.github.wxiaoqi.security.modules.admin.biz.UserAgent;
 import com.github.wxiaoqi.security.modules.admin.entity.Menu;
 import com.github.wxiaoqi.security.modules.admin.vo.AuthorityMenuTree;
 import com.github.wxiaoqi.security.modules.admin.vo.MenuTree;
@@ -31,9 +31,9 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("menu")
-public class MenuController extends BaseController<MenuBiz, Menu> {
+public class MenuController extends BaseController<MenuAgent, Menu> {
     @Autowired
-    private UserBiz userBiz;
+    private UserAgent userBiz;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody

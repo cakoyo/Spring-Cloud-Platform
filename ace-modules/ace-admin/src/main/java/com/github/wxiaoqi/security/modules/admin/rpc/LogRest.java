@@ -1,7 +1,7 @@
 package com.github.wxiaoqi.security.modules.admin.rpc;
 
 import com.github.wxiaoqi.security.api.vo.log.LogInfo;
-import com.github.wxiaoqi.security.modules.admin.biz.GateLogBiz;
+import com.github.wxiaoqi.security.modules.admin.biz.GateLogAgent;
 import com.github.wxiaoqi.security.modules.admin.entity.GateLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +21,7 @@ import java.util.Date;
 @Slf4j
 public class LogRest {
     @Autowired
-    private GateLogBiz gateLogBiz;
+    private GateLogAgent gateLogBiz;
 
     @RequestMapping(value = "/log/save", method = RequestMethod.POST)
     public @ResponseBody

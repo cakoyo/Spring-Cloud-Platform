@@ -11,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ResourceAuthorityBiz extends MapperAgent<ResourceAuthority, ResourceAuthorityMapper> {
+public class ResourceAuthorityAgent extends MapperAgent<ResourceAuthority, ResourceAuthorityMapper> {
 }

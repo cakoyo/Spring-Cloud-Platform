@@ -38,12 +38,17 @@ import org.apache.velocity.app.Velocity;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * 代码生成器   工具类
+ * 代码生成器 工具类
  *
  * @author chenshun
  * @version 2016年12月19日 下午11:40:24
@@ -66,21 +71,20 @@ public class GeneratorUtils {
     /**
      * 生成代码
      */
-    public static void generatorCode(Map<String, String> table,
-                                     List<Map<String, String>> columns, ZipOutputStream zip, String author, String path, String mainModule, String tablePrefix) {
-        //配置信息
+    public static void generatorCode(Map<String, String> table, List<Map<String, String>> columns, ZipOutputStream zip, String author, String path, String mainModule, String tablePrefix) {
+        // 配置信息
         Configuration config = getConfig();
 
-        //表信息
+        // 表信息
         TableEntity tableEntity = new TableEntity();
         tableEntity.setTableName(table.get("tableName"));
         tableEntity.setComments(table.get("tableComment"));
-        //表名转换成Java类名
+        // 表名转换成Java类名
         String className = tableToJava(tableEntity.getTableName(), StringUtils.isBlank(tablePrefix) ? config.getString("tablePrefix") : tablePrefix);
         tableEntity.setClassName(className);
         tableEntity.setClassname(StringUtils.uncapitalize(className));
 
-        //列信息
+        // 列信息
         List<ColumnEntity> columsList = new ArrayList<>();
         for (Map<String, String> column : columns) {
             ColumnEntity columnEntity = new ColumnEntity();
@@ -89,16 +93,16 @@ public class GeneratorUtils {
             columnEntity.setComments(column.get("columnComment"));
             columnEntity.setExtra(column.get("extra"));
 
-            //列名转换成Java属性名
+            // 列名转换成Java属性名
             String attrName = columnToJava(columnEntity.getColumnName());
             columnEntity.setAttrName(attrName);
             columnEntity.setAttrname(StringUtils.uncapitalize(attrName));
 
-            //列的数据类型，转换成Java类型
+            // 列的数据类型，转换成Java类型
             String attrType = config.getString(columnEntity.getDataType(), "unknowType");
             columnEntity.setAttrType(attrType);
 
-            //是否主键
+            // 是否主键
             if ("PRI".equalsIgnoreCase(column.get("columnKey")) && tableEntity.getPk() == null) {
                 tableEntity.setPk(columnEntity);
             }
@@ -107,17 +111,17 @@ public class GeneratorUtils {
         }
         tableEntity.setColumns(columsList);
 
-        //没主键，则第一个字段为主键
+        // 没主键，则第一个字段为主键
         if (tableEntity.getPk() == null) {
             tableEntity.setPk(tableEntity.getColumns().get(0));
         }
 
-        //设置velocity资源加载器
+        // 设置velocity资源加载器
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
 
-        //封装模板数据
+        // 封装模板数据
         Map<String, Object> map = new HashMap<>();
         map.put("tableName", tableEntity.getTableName());
         map.put("comments", tableEntity.getComments());
@@ -129,21 +133,21 @@ public class GeneratorUtils {
         map.put("package", path);
         map.put("author", author);
         map.put("email", config.getString("email"));
-        map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
+        map.put("datetime", DateUtils.format(Calendar.getInstance().getTime(), DateUtils.DATE_TIME_PATTERN));
         map.put("moduleName", mainModule);
         map.put("secondModuleName", toLowerCaseFirstOne(className));
         VelocityContext context = new VelocityContext(map);
 
-        //获取模板列表
+        // 获取模板列表
         List<String> templates = getTemplates();
         for (String template : templates) {
-            //渲染模板
+            // 渲染模板
             StringWriter sw = new StringWriter();
             Template tpl = Velocity.getTemplate(template, "UTF-8");
             tpl.merge(context, sw);
 
             try {
-                //添加到zip
+                // 添加到zip
                 zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), path, mainModule)));
                 IOUtils.write(sw.toString(), zip, "UTF-8");
                 IOUtils.closeQuietly(sw);
@@ -154,12 +158,11 @@ public class GeneratorUtils {
         }
     }
 
-
     /**
      * 列名转换成Java属性名
      */
     public static String columnToJava(String columnName) {
-        return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
+        return WordUtils.capitalizeFully(columnName, new char[] { '_' }).replace("_", "");
     }
 
     /**
@@ -220,7 +223,7 @@ public class GeneratorUtils {
         return null;
     }
 
-    //首字母转小写
+    // 首字母转小写
     public static String toLowerCaseFirstOne(String s) {
         if (Character.isLowerCase(s.charAt(0))) {
             return s;

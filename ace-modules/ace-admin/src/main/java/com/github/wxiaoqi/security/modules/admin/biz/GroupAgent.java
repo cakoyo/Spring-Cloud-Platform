@@ -27,7 +27,7 @@ import java.util.*;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GroupBiz extends MapperAgent<Group, GroupMapper> {
+public class GroupAgent extends MapperAgent<Group, GroupMapper> {
     @Autowired
     private UserMapper userMapper;
     @Autowired

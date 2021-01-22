@@ -1,7 +1,7 @@
 package com.github.wxiaoqi.security.modules.admin.rest;
 
-import com.github.wxiaoqi.security.modules.admin.biz.ElementBiz;
-import com.github.wxiaoqi.security.modules.admin.biz.UserBiz;
+import com.github.wxiaoqi.security.modules.admin.biz.ElementAgent;
+import com.github.wxiaoqi.security.modules.admin.biz.UserAgent;
 import com.github.wxiaoqi.security.modules.admin.entity.Element;
 
 import moe.kira.common.message.impl.ObjectRestResponse;
@@ -27,9 +27,9 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("element")
-public class ElementController extends BaseController<ElementBiz, Element> {
+public class ElementController extends BaseController<ElementAgent, Element> {
   @Autowired
-  private UserBiz userBiz;
+  private UserAgent userBiz;
 
   @RequestMapping(value = "/list", method = RequestMethod.GET)
   @ResponseBody
